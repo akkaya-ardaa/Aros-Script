@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Business.Concrete
@@ -39,7 +40,13 @@ namespace Business.Concrete
 
         public IResult Delete(int articleId)
         {
-            BusinessRules.Run(CheckArticleOwnership(articleId,int.Parse(_httpContextAccessor.HttpContext.User.Identity.GetUserId())));
+            Debug.WriteLine(articleId);
+            var result = BusinessRules.Run(CheckArticleOwnership(articleId,int.Parse(_httpContextAccessor.HttpContext.User.Identity.GetUserId())));
+            if (!result.Success)
+            {
+                return new ErrorResult(result.Message);
+            }
+            Debug.WriteLine(int.Parse(_httpContextAccessor.HttpContext.User.Identity.GetUserId()));
             ErrorHandler.Handle(()=> {
                 _articleDal.Delete(new Article() { Id = articleId });
             });
@@ -79,6 +86,11 @@ namespace Business.Concrete
         public IDataResult<List<Article>> Search(string query)
         {
             return new SuccessDataResult<List<Article>>(_articleDal.GetAll(p=>p.Title.ToLower().Contains(query.ToLower())));
+        }
+
+        public Article GetById(int articleId)
+        {
+            return _articleDal.Get(p => p.Id == articleId);
         }
     }
 }

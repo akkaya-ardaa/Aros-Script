@@ -8,6 +8,7 @@ namespace Business.Abstract
 {
     public interface IArticleService
     {
+        Article GetById(int articleId);
         IDataResult<List<Article>> GetByCategory(int categoryId);
         IDataResult<List<Article>> Search(string query);
         IResult Add(Article article);

@@ -61,5 +61,20 @@ namespace WebAPI.Controllers
             }
             return await Task.FromResult(BadRequest(result));
         }
+
+        [HttpGet("delete")]
+        public async Task<IActionResult> Delete([FromQuery] int articleId)
+        {
+            var article = _articleService.GetById(articleId);
+            var result = _articleService.Delete(articleId);
+            if (result.Success)
+            {
+                _cacheManager.Remove($"articles_{article.CategoryId}"); //cache sil.
+                Debug.WriteLine($"cleaned cache articles_{article.CategoryId}");
+                return await Task.FromResult(Ok(result));
+            }
+            return await Task.FromResult(BadRequest(result));
+        }
+
     }
 }
