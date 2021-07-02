@@ -14,5 +14,7 @@ namespace Entities.Concrete
         public DateTime AddedDate { get; set; }
         public int AuthorId { get; set; }
         public int CategoryId { get; set; }
+        public bool BreakingArticle { get; set; }
+        public bool ShowInHomePage { get; set; }
     }
 }

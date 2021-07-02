@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Try;
@@ -70,6 +71,13 @@ namespace Business.Concrete
             {
                 return new ErrorResult("Haber mevcut değil!");
             }
+            return new SuccessResult();
+        }
+
+        [SecuredOperation("admin")]
+        public IResult Delete(int commentId)
+        {
+            ErrorHandler.Handle(() => { _commentDal.Delete(new Comment() { Id = commentId }); });
             return new SuccessResult();
         }
     }

@@ -10,5 +10,6 @@ namespace Business.Abstract
     {
         IDataResult<List<Comment>> GetCommentsByArticle(int articleId);
         IResult Add(Comment comment);
+        IResult Delete(int commentId);
     }
 }

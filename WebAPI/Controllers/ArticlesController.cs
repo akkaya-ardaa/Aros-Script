@@ -32,6 +32,8 @@ namespace WebAPI.Controllers
             return await Task.FromResult(Ok(result));
         }
 
+        //Haberleri çekmek için bodyleri dosyalama tekniğini düşün...
+
         [HttpGet("getallbycategory")]
         public async Task<IActionResult> GetAllByCategory([FromQuery] int categoryId)
         {

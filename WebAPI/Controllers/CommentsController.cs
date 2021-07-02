@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,5 +37,18 @@ namespace WebAPI.Controllers
             }
             return await Task.FromResult(BadRequest(result));
         }
+
+        [HttpGet("delete")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            var result = _commentService.Delete(id);
+            if (result.Success)
+            {
+                return await Task.FromResult(Ok(result));
+            }
+            return await Task.FromResult(BadRequest(result));
+        }
+
     }
 }
