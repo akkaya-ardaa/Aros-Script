@@ -21,7 +21,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfArticleDal>().As<IArticleDal>();
             builder.RegisterType<EfAuthorDal>().As<IAuthorDal>();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+            builder.RegisterType<EfCommentDal>().As<ICommentDal>();
 
+            builder.RegisterType<CommentManager>().As<ICommentService>();
             builder.RegisterType<ArticleManager>().As<IArticleService>();
             builder.RegisterType<CategoryManager>().As<ICategoryService>();
             builder.RegisterType<AuthorManager>().As<IAuthorService>();
